@@ -1,0 +1,2 @@
+module smProject2 {
+}
