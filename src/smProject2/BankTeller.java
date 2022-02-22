@@ -3,10 +3,6 @@ package smProject2;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-import src.Date;
-import src.Patient;
-import src.Time;
-
 public class BankTeller
 {
 	private AccountDatabase database;
@@ -97,8 +93,8 @@ public class BankTeller
 		    	account = new Savings(profile, initDeposit, loyal);
 		    	break;
 		    case "MM":
-		    	double init = Double.parseDouble(st.nextToken());
-		    	account = new MoneyMarket(profile, init);
+		    	double initDepossit = Double.parseDouble(st.nextToken());
+		    	account = new MoneyMarket(profile, initDepossit);
 		    	break;
 	    }
 

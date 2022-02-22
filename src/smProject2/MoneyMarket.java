@@ -3,16 +3,78 @@ package smProject2;
 public class MoneyMarket extends Savings
 {
 	public boolean loyal;
+	private int withdrawls;
+	private final double YEARLY_INTEREST = 0.008;
+	private final double LOYAL_INTEREST = 0.0095;
+	private final double FEE = 10;
+	private final int FEE_WAIVE = 2500;
 
 	/**
-	 * Creates an instance of the Account class when given the holder, initial deposit, and whether or the the customer is loyal.
-	 * For use with the checking class.
+	 * Creates an instance of the MoneyMarket class when given the holder and initial deposit.
 	 * @param holder The holder of the account. Should be Profile class.
+	 * @param init The initial deposit.
 	 */
-	public Account(Profile holder, double init, int loyal)
+	public MoneyMarket(Profile holder, double init)
 	{
 		this.holder = holder;
 		this.balance = init;
-		this.loyal = loyal == 1;
+		this.loyal = true;
+		this.withdrawls = 0;
+	}
+
+	@Override
+	public void withdraw(double amount)
+	{
+		balance -= amount;
+		withdrawls++;
+		if(amount < 2500) loyal = false;
+	}
+
+	/**
+	 * Returns the monthly interest.
+	 * @return The monthly interest.
+	 */
+	@Override
+	public double monthlyInterest()
+	{
+		if(loyal) return LOYAL_INTEREST / Month.TOTAL_MONTHS;
+		return YEARLY_INTEREST / Month.TOTAL_MONTHS;
+	}
+
+	/**
+	 * Returns the monthly fee.
+	 * Returns 0 if the fee is waived.
+	 * @return The monthly fee.
+	 */
+	@Override
+	public double fee()
+	{
+		if(balance >= FEE_WAIVE) return 0;
+		return FEE;
+	}
+
+	/**
+	 * Returns a string containing the type of account.
+	 * For use with the AccountDatabase.print method.
+	 * @return A string containing the type of account
+	 */
+	@Override
+	public String getType()
+	{
+		return "Money Market Savings";
+	}
+
+	/**
+	 * Returns a string representation of the Account
+	 * @return a string representation of the Account
+	 */
+	@Override
+	public String toString()
+	{
+		String acc = getType() + "::" + holder.toString() + "::Balance $" + balance;
+		if(closed) acc += "::CLOSED";
+		else if(loyal) acc += "::Loyal";
+		acc += "::withdrawl: " + withdrawls;
+		return acc;
 	}
 }

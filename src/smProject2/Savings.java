@@ -2,30 +2,67 @@ package smProject2;
 
 public class Savings extends Account
 {
+	private boolean loyal;
+	private final double INTEREST = 0.003;
+	private final double LOYAL_INTEREST = 0.0045;
+	private final double FEE = 6;
+	private final int FEE_WAIVE = 300;
+
 	public Savings() { }
 
 	/**
-	 * Creates an instance of the Account class when given the holder and an initial deposit.
-	 * For use with the checking class.
+	 * Creates an instance of the Savings class when given the holder and an initial deposit.
 	 * @param holder The holder of the account. Should be Profile class.
+	 * @param init the initial deposit.
 	 */
-	public Savings(Profile holder, int init)
+	public Savings(Profile holder, double init, int loyal)
 	{
 		this.holder = holder;
 		this.balance = init;
+		this.loyal = loyal == 1;
 	}
 
+	/**
+	 * Returns the monthly interest.
+	 * @return The monthly interest.
+	 */
 	public double monthlyInterest()
 	{
-		return 8; //return the monthly interest
+		if(loyal) return LOYAL_INTEREST / Month.TOTAL_MONTHS;
+		return INTEREST / Month.TOTAL_MONTHS;
 	}
 
+	/**
+	 * Returns the monthly fee.
+	 * Returns 0 if the fee is waived.
+	 * @return The monthly fee.
+	 */
 	public double fee()
 	{
-		return 15; //return the monthly fee
+		if(balance >= FEE_WAIVE) return 0;
+		return FEE;
 	}
 
-	public String getType() {
-		return "Savings"; //return the account type (class name)
+	/**
+	 * Returns a string containing the type of account.
+	 * For use with the AccountDatabase.print method.
+	 * @return A string containing the type of account
+	 */
+	public String getType()
+	{
+		return "Savings";
+	}
+
+	/**
+	 * Returns a string representation of the Account
+	 * @return a string representation of the Account
+	 */
+	@Override
+	public String toString()
+	{
+		String acc = getType() + "::" + holder.toString() + "::Balance $" + balance;
+		if(closed) acc += "::CLOSED";
+		else if(loyal) acc += "::Loyal";
+		return acc;
 	}
 }

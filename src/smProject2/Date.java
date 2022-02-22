@@ -128,7 +128,7 @@ public class Date implements Comparable<Date>
 	 */
 	public boolean isValid()
 	{
-		final int TOTAL_MONTH = 12;
+		final int MIN_YEAR = 1900;
 		final int MIN_MONTH = 1;
 		final int TOTAL_FEB_DAYS = 28;
 		final int TOTAL_FEB_LEAP_DAYS = 29;
@@ -137,9 +137,9 @@ public class Date implements Comparable<Date>
 		boolean leapYear = isLeapYear(year);
 		Calendar today = Calendar.getInstance();
 
-		if(year < 1900 || year > today.get(Calendar.YEAR)) return false;
+		if(year < MIN_YEAR || year > today.get(Calendar.YEAR)) return false;
 
-		if(month > TOTAL_MONTH || month < MIN_MONTH) return false;
+		if(month > Month.TOTAL_MONTHS || month < MIN_MONTH) return false;
 
 		if(day < 1) return false;
 		if(month == Month.FEB)

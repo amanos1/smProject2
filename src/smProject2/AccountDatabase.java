@@ -29,7 +29,16 @@ public class AccountDatabase
 		return false;
 	} //return false if insufficient fund
 
-	public void print() { }
+	/**
+	 * Prints info about all the accounts in the system to the console.
+	 * Prints in whatever order they may be in.
+	 */
+	public void print() {
+		for(Account a : accounts)
+		{
+			System.out.println(a.toString());
+		}
+	}
 
 	public void printByAccountType() { }
 

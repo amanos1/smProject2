@@ -19,23 +19,40 @@ public abstract class Account
 		this.balance = init;
 	}
 
+	/**
+	 * WHAT I WRITE AS A DESCRIPTION FOR THIS FUNCTION DEPENDS ON HOW THIS EQUALS FUNCTION IS USED IN THE PROGRAM
+	 */
 	@Override
 	public boolean equals(Object obj)
 	{
-		return this.toString().equals(obj);
+		return toString().equals(obj);
 	}
 
+	/**
+	 * Returns a string representation of the Account
+	 * @return a string representation of the Account
+	 */
 	@Override
 	public String toString()
 	{
-		return "Account";
+		String acc = getType() + "::" + holder.toString() + "::Balance $" + balance;
+		if(closed) acc += "::CLOSED";
+		return acc;
 	}
 
+	/**
+	 * Takes out an amount of money from an account.
+	 * @param amount Amount of money to take out.
+	 */
 	public void withdraw(double amount)
 	{
 		balance -= amount;
 	}
 
+	/**
+	 * Adds an amount of money to an account.
+	 * @param amount Amount of money to add.
+	 */
 	public void deposit(double amount)
 	{
 		balance += amount;

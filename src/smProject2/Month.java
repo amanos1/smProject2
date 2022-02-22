@@ -19,4 +19,5 @@ public class Month
     public static final int OCT = 10;
     public static final int NOV = 11;
     public static final int DEC = 12;
+    public static final int TOTAL_MONTHS = 12;
 }
