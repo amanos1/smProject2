@@ -1,6 +1,11 @@
 package smProject2;
 
 import java.util.Scanner;
+import java.util.StringTokenizer;
+
+import src.Date;
+import src.Patient;
+import src.Time;
 
 public class BankTeller
 {
@@ -60,8 +65,44 @@ public class BankTeller
 	    System.out.println("Bank Teller is terminated.");	    
 	}
 
+	/**
+	 * Opens a new account with the information in the given string.
+	 * Prints error message if the command is invalid or the account conflicts with another one.
+	 * @param com The input string containing information about the account to be created.
+	 */
 	private void open(String com)
 	{
+	    StringTokenizer st = new StringTokenizer(com," ");
+	    st.nextToken();
+	    String type = st.nextToken();
+	    String fname = st.nextToken();
+	    String lname = st.nextToken();
+	    String dob = st.nextToken();
+	    Profile profile = new Profile(fname, lname, dob);
+	    
+	    Account account;
+	    switch(type)
+	    {
+		    case "C":
+		    	account = new Checking(profile);
+		    	break;
+		    case "CC":
+		    	double init = Double.parseDouble(st.nextToken());
+		    	int campus = Integer.parseInt(st.nextToken());
+		    	account = new CollegeChecking(profile, init, campus);
+		    	break;
+		    case "S":
+		    	double initDeposit = Double.parseDouble(st.nextToken());
+		    	int loyal = Integer.parseInt(st.nextToken());
+		    	account = new Savings(profile, initDeposit, loyal);
+		    	break;
+		    case "MM":
+		    	double init = Double.parseDouble(st.nextToken());
+		    	account = new MoneyMarket(profile, init);
+		    	break;
+	    }
+
+	    Date appointmentDate = new Date(st.nextToken());
 		return;
 	}
 
