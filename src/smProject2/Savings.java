@@ -1,4 +1,5 @@
 package smProject2;
+import src.Month;
 
 public class Savings extends Account
 {
@@ -51,6 +52,12 @@ public class Savings extends Account
 	public String getType()
 	{
 		return "Savings";
+	}
+	
+	public boolean equals(Object obj) 
+	{
+		Savings s = (Savings)obj;
+		return (super.equals(s) && this.getType().equals(s.getType()));
 	}
 
 	/**
