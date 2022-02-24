@@ -1,4 +1,5 @@
 package smProject2;
+import src.Month;
 
 public class MoneyMarket extends Savings
 {
@@ -25,9 +26,10 @@ public class MoneyMarket extends Savings
 	@Override
 	public void withdraw(double amount)
 	{
-		balance -= amount;
+		super.withdraw(amount);
+		if(balance < 2500) loyal = false;
 		withdrawls++;
-		if(amount < 2500) loyal = false;
+		
 	}
 
 	/**
@@ -62,6 +64,12 @@ public class MoneyMarket extends Savings
 	public String getType()
 	{
 		return "Money Market Savings";
+	}
+	
+	public boolean equals(Object obj) 
+	{
+		MoneyMarket mm = (MoneyMarket)obj;
+		return (super.equals(mm));
 	}
 
 	/**
