@@ -1,7 +1,6 @@
 package smProject2;
 
-public abstract class Account
-{
+public abstract class Account {
 	protected Profile holder;
 	protected boolean closed;
 	protected double balance;
@@ -25,7 +24,8 @@ public abstract class Account
 	@Override
 	public boolean equals(Object obj)
 	{
-		return toString().equals(obj);
+		Account newAccount = (Account)obj;
+		return holder.equals(newAccount.holder);
 	}
 
 	/**
@@ -46,7 +46,10 @@ public abstract class Account
 	 */
 	public void withdraw(double amount)
 	{
-		balance -= amount;
+		if(balance - amount >= 0) 
+		{
+			balance -= amount;
+		}
 	}
 
 	/**
