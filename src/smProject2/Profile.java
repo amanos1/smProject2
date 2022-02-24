@@ -1,5 +1,5 @@
 package smProject2;
-
+import src.Date;
 public class Profile
 {
 	private String fname;
@@ -18,6 +18,11 @@ public class Profile
 		this.lname = lname;
 		this.dob = new Date(dob);
 	}
+	
+	public boolean isEquals(Profile p) 
+	{
+		return (fname.equals(p.fname) && lname.equals(p.lname) && dob.equals(p.dob));
+	}
 
 	/**
 	 * Returns a string representation of the profile
@@ -28,4 +33,4 @@ public class Profile
 	{
 		return fname + " " + lname + " " + dob.toString();
 	}
-}
+} 
