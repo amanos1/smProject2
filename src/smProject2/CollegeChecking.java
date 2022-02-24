@@ -1,4 +1,5 @@
 package smProject2;
+import src.Month;
 
 public class CollegeChecking extends Checking
 {
@@ -65,6 +66,12 @@ public class CollegeChecking extends Checking
 			case NEWARK: return "NEWARK";
 			default: return "";
 		}
+	}
+	
+	public boolean equals(Object obj) 
+	{
+		CollegeChecking newAccount = (CollegeChecking)obj;
+		return (super.equals(newAccount) && this.getCampus().equals(newAccount.getCampus()));
 	}
 
 	/**
