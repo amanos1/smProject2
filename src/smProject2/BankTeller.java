@@ -74,6 +74,7 @@ public class BankTeller
 	    String fname = st.nextToken();
 	    String lname = st.nextToken();
 	    String dob = st.nextToken();
+	    
 	    Profile profile = new Profile(fname, lname, dob);
 	    
 	    Account account;
@@ -81,6 +82,7 @@ public class BankTeller
 	    {
 		    case "C":
 		    	account = new Checking(profile);
+		    	database.open(account);
 		    	break;
 		    case "CC":
 		    	double init = Double.parseDouble(st.nextToken());
@@ -98,7 +100,7 @@ public class BankTeller
 		    	break;
 	    }
 
-	    Date appointmentDate = new Date(st.nextToken());
+	  //  Date appointmentDate = new Date(st.nextToken());
 		return;
 	}
 
