@@ -1,12 +1,11 @@
 package smProject2;
-
+import src.Date;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class BankTeller
 {
 	private AccountDatabase database;
-
 	private static final int MONEY_MARKET_MIN = 2500;
 	/**
      * This function serves as the backbone of the program.
@@ -26,23 +25,43 @@ public class BankTeller
 	        command = scn.nextLine();
 	        commandList = command.split(" ");
 
-	        String c = commandList[0];
-	        if(c.equals("Q")) break;
-	        else if(c.equals("O")) open(command);
-	        else if(c.equals("C")) close(command);
-	        else if(c.equals("D")) deposit(command);
-	        else if(c.equals("W")) withdraw(command);
-	        else if(c.equals("P")) database.print();
-	        else if(c.equals("PT")) database.printByAccountType();
-	        else if(c.equals("PI")) database.printFeeAndInterest();
-	        else if(c.equals("UB")) update();
-	        else System.out.println("Invalid command!");
+	        if(commandList[0].equals("Q")) break;
+	        switch(commandList[0])
+	        {
+		        case "O":
+		        	open(command);
+		            break;
+		        case "C":
+		        	close(command);
+		            break;
+		        case "D":
+		            deposit(command);
+		            break;
+		        case "W":
+		            withdraw(command);
+		            break;
+		        case "P":
+		        	database.print();
+		            break;
+		        case "PT":
+		        	database.printByAccountType();
+		            break;
+		        case "PI":
+		        	database.printFeeAndInterest();
+		            break;
+		        case "UB":
+		        	update();
+		            break;
+		        default:
+		        	System.out.println("Invalid command!");
+	        }
 	    }
 
 	    scn.close();
 	    System.out.println("Bank Teller is terminated.");	    
 	}
-
+	
+	
 	/**
 	 * Creates a Profile object with the information provided.
 	 * @param input The input string containing information about the Profile.
@@ -83,6 +102,9 @@ public class BankTeller
 	    Profile p = new Profile(fname, lname, dob);
 		return p;
 	}
+	
+
+	
 
 	/**
 	 * Creates an Account object with the info provided.
@@ -285,18 +307,83 @@ public class BankTeller
 	    }
 	}
 
+
+
+	private void update()
+	{
+		database.update();
+	}
+
 	private void deposit(String com)
 	{
+		StringTokenizer st = new StringTokenizer(com, " ");
+	    st.nextToken();
+	    if(!st.hasMoreTokens())
+	    {
+	    	System.out.println("Invalid Command!");
+	    	return;
+	    }
+
+	    String type = st.nextToken();
+
+
+	    Profile profile = createProfile(com, st, true);
+	    if(profile == null) return;
+	    if(!st.hasMoreTokens())
+	    {
+	    	System.out.println("Invalid Command!");
+	    	return;
+	    }
+	    double depositAmount = Double.parseDouble(st.nextToken());
+	    int profileIndex = database.findHolder(profile);
+	    //System.out.println(profile+" "+profileIndex);
+	    if(profileIndex != -1) 
+	    {
+	    	database.depositAmount(profileIndex, depositAmount);
+	    }else 
+	    {
+	    	System.out.println("Account does not exists");
+	    }
+	    
+	    
 		return;
 	}
 
 	private void withdraw(String com)
 	{
-		return;
+		StringTokenizer st = new StringTokenizer(com, " ");
+	    st.nextToken();
+	    if(!st.hasMoreTokens())
+	    {
+	    	System.out.println("Invalid Command!");
+	    	return;
+	    }
+
+	    String type = st.nextToken();
+
+
+	    Profile profile = createProfile(com, st, true);
+	    if(profile == null) return;
+	    if(!st.hasMoreTokens())
+	    {
+	    	System.out.println("Invalid Command!");
+	    	return;
+	    }
+	    double withdrawAmount = Double.parseDouble(st.nextToken());
+	    int profileIndex = database.findHolder(profile);
+	    //System.out.println(profile+" "+profileIndex);
+	    if(profileIndex != -1) 
+	    {
+	    	if(!(database.withdrawAmount(profileIndex, withdrawAmount))) 
+	    	{
+	    		System.out.println("Insufficient Balance");
+	    	}
+	    }else 
+	    {
+	    	System.out.println("Account does not exists");
+	    }
+		//System.out.println(withdrawAmount);
 	}
 
-	private void update()
-	{
-		return;
-	}
+	
 }
