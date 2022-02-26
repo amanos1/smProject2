@@ -61,16 +61,6 @@ public class Savings extends Account
 	}
 
 	/**
-	 * Because there can be many savings accounts held by one person, Saving's version of equals() also checks that the balances are equal.
-	 * @param s The account to compare ours to.
-	 * @return true if the accounts have the same holder and balance, false if not.
-	 */
-	public boolean equals(Savings s) 
-	{
-		return super.equals(s) && this.balance == s.getBalance();
-	}
-
-	/**
 	 * Returns a string representation of the Account
 	 * @return a string representation of the Account
 	 */

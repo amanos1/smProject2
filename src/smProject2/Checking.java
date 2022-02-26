@@ -26,6 +26,11 @@ public class Checking extends Account
 		return YEARLY_INTEREST / Month.TOTAL_MONTHS;
 	}
 
+	public Profile getHolder()
+	{
+		return holder;
+	}
+
 	/**
 	 * Returns the monthly fee.
 	 * Returns 0 if the fee is waived.

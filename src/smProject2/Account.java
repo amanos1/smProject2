@@ -38,7 +38,7 @@ public abstract class Account {
 	@Override
 	public String toString()
 	{
-		String acc = getType() + "::" + holder.toString() + "::Balance $" + balance;
+		String acc = String.format("%s::%s::Balance $%.2f", getType(), holder, balance);
 		if(closed) acc += "::CLOSED";
 		return acc;
 	}
