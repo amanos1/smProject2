@@ -67,6 +67,12 @@ public class CollegeChecking extends Checking
 		}
 	}
 	
+	public boolean equals(Object obj) 
+	{
+		CollegeChecking newAccount = (CollegeChecking)obj;
+		return (super.equals(newAccount) && this.getCampus().equals(newAccount.getCampus()));
+	}
+	
 	/**
 	 * Returns a string representation of the Account
 	 * @return a string representation of the Account
