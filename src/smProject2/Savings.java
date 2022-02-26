@@ -1,4 +1,5 @@
 package smProject2;
+import src.Month;
 
 public class Savings extends Account
 {
@@ -19,7 +20,7 @@ public class Savings extends Account
 	{
 		this.holder = holder;
 		this.balance = init;
-		this.loyal = loyal;
+		this.loyal =  loyal;
 	}
 
 	/**
@@ -28,8 +29,8 @@ public class Savings extends Account
 	 */
 	public double monthlyInterest()
 	{
-		if(loyal) return LOYAL_INTEREST / Month.TOTAL_MONTHS;
-		return INTEREST / Month.TOTAL_MONTHS;
+		if(loyal) return this.balance * (LOYAL_INTEREST / Month.TOTAL_MONTHS);
+		return this.balance * (INTEREST / Month.TOTAL_MONTHS);
 	}
 
 	/**
@@ -42,7 +43,8 @@ public class Savings extends Account
 		if(balance >= FEE_WAIVE) return 0;
 		return FEE;
 	}
-
+	
+	
 	/**
 	 * Does the same as the general Account's close method, but also sets the account to be not loyal.
 	 */
@@ -62,6 +64,17 @@ public class Savings extends Account
 	{
 		return "Savings";
 	}
+	
+	public void deductFees() 
+	{
+		this.balance -= this.fee();
+	}
+	
+	public boolean equals(Object obj) 
+	{
+		Savings s = (Savings)obj;
+		return (super.equals(s) && this.getType().equals(s.getType()));
+	}
 
 	/**
 	 * Returns a string representation of the Account
@@ -70,8 +83,9 @@ public class Savings extends Account
 	@Override
 	public String toString()
 	{
-		String acc = super.toString();
-		if(loyal && !closed) acc += "::Loyal";
+		String acc = getType() + "::" + holder.toString() + "::Balance $" + balance;
+		if(closed) acc += "::CLOSED";
+		else if(loyal) acc += "::Loyal";
 		return acc;
 	}
 }
