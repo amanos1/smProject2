@@ -1,5 +1,6 @@
 package smProject2;
 
+
 public abstract class Account {
 	protected Profile holder;
 	protected boolean closed;
@@ -28,7 +29,7 @@ public abstract class Account {
 	public boolean equals(Object obj)
 	{
 		Account newAccount = (Account) obj;
-		return holder.isEquals(newAccount.holder) && getType().equals(newAccount.getType());
+		return this.holder.isEquals(newAccount.holder) && getType().equals(newAccount.getType());
 	}
 
 	/**
@@ -95,6 +96,12 @@ public abstract class Account {
 	{
 		closed = false;
 	}
+	
+	/**
+	 * Deducts fees from balance if it is not waived.
+	 */
+	public abstract void deductFees();
+	
 
 	/**
 	 * Returns the monthly interest.
