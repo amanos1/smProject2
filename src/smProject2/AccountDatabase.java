@@ -4,46 +4,62 @@ public class AccountDatabase
 {
 	private Account [] accounts;
 	private int numAcct;
-
-	private final static int GROW_AMOUNT = 4;
-
+	
 	public AccountDatabase() 
 	{
-		accounts = new Account[GROW_AMOUNT];
+		accounts = new Account[4];
 		numAcct = 0;
 	}
 
-	/**
-	 * Searches for an account in the database.
-	 * @param account The account to search for.
-	 * @return The index of the account if it is in the array, -1 if it is not.
-	 */
 	private int find(Account account)
 	{
 		for(int i = 0; i < numAcct; i++) 
 		{
-			if(accounts[i].equals(account)) 
+			if(accounts[i].holder.isEquals(account.holder) && accounts[i] != null && accounts[i].getType().equals(account.getType())) 
 			{
 				return i;
 			}
 		}
 		return -1;
 	}
+	
+	public int findHolder(Profile p) 
+	{
+		for(int i=0; i<numAcct; i++) 
+		{
+			if(accounts[i].holder.isEquals(p)) 
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public void depositAmount(int index, double amount)
+	{
+		accounts[index].deposit(amount);
+	} 
+	{
+		
+	}
 
-	/**
-	 * Increases the accounts array by four when the array gets full.
-	 */
 	private void grow() 
 	{
-			Account [] temp = new Account[accounts.length + GROW_AMOUNT];
-			for(int i = 0; i < numAcct; i++) 
+			Account [] temp = new Account[accounts.length+4];
+			for(int i = 0; i < accounts.length; i++) 
 			{
 				temp[i] = accounts[i];
 			}
 			accounts = temp;
 		
 	}
-
+	
+	public boolean withdrawAmount(int index, double amount) 
+	{
+		if((accounts[index].getBalance()-amount) < 0) return false;
+			accounts[index].withdraw(amount);
+			return true;
+	}
 	/**
 	 * Determines whether there is already a checking account with the same patient in the database.
 	 * @param account The account we are checking if there is a duplicate of.
@@ -62,11 +78,7 @@ public class AccountDatabase
 		}
 	}
 
-	/**
-	 * Adds an account to the database if one with the same holder and type does not already exist.
-	 * @param account The account to add to the database.
-	 * @return true if the account was successfully added to the database, false if not.
-	 */
+
 	public boolean open(Account account)
 	{
 		if(numAcct == accounts.length)
@@ -83,6 +95,7 @@ public class AccountDatabase
 
 		accounts[numAcct++] = account;
 		return true;
+		
 	}
 
 	public boolean close(Account account)
@@ -98,9 +111,8 @@ public class AccountDatabase
 		 * There are two errors:
 		 * The account does not exist
 		 * The account exists but is already closed
-		 */
-	}
-
+		 */	}
+	
 	public boolean isThere(Account account)
 	{
 		return find(account) >= 0;
@@ -134,11 +146,7 @@ public class AccountDatabase
 
 		System.out.println("*end of list.\n");
 	}
-
-	/**
-	 * Prints the same info as the print() method plus the monthly interest and fee for each account in the system.
-	 * Prints in whatever order they may be in.
-	 */
+	
 	public void printFeeAndInterest() 
 	{
 		if(numAcct == 0)
@@ -158,11 +166,7 @@ public class AccountDatabase
 		System.out.println("*end of list.\n");
 	}
 
-	/**
-	 * Sorts the accounts in the system by account type and prints them to the console.
-	 * If two accounts are the same type, it does not matter which order they are in.
-	 */
-	public void printByAccountType()
+	public void printByAccountType() 
 	{
 		if(numAcct == 0)
 		{
@@ -191,7 +195,16 @@ public class AccountDatabase
 
 		System.out.println("*end of list.\n");
 	}
-
+	public void update() 
+	{
+		for(int i = 0; i < numAcct; i++) 
+		{
+			depositAmount(i, accounts[i].monthlyInterest());
+			accounts[i].deductFees();
+		}
+		print();
+	}
+	
 	/**
 	 * Swaps elements a and b in the accounts array.
 	 * For use with the printByAccountType() method.
@@ -204,4 +217,5 @@ public class AccountDatabase
 		accounts[a] = accounts[b];
 		accounts[b] = temp;
 	}
+
 }
