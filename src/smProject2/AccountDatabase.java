@@ -13,6 +13,11 @@ public class AccountDatabase
 		numAcct = 0;
 	}
 
+	/**
+	 * Searches for an account in the database.
+	 * @param account The account to search for.
+	 * @return The index of the account if it is in the array, -1 if it is not.
+	 */
 	private int find(Account account)
 	{
 		for(int i = 0; i < numAcct; i++) 
@@ -25,6 +30,9 @@ public class AccountDatabase
 		return -1;
 	}
 
+	/**
+	 * Increases the accounts array by four when the array gets full.
+	 */
 	private void grow() 
 	{
 			Account [] temp = new Account[accounts.length + GROW_AMOUNT];
@@ -36,6 +44,11 @@ public class AccountDatabase
 		
 	}
 
+	/**
+	 * Determines whether there is already a checking account with the same patient in the database.
+	 * @param account The account we are checking if there is a duplicate of.
+	 * @return true if the account already exists in the database, false if not.
+	 */
 	private boolean checkingConflict(Checking account)
 	{
 		if(account.getType().equals("Checking"))
@@ -49,9 +62,14 @@ public class AccountDatabase
 		}
 	}
 
+	/**
+	 * Adds an account to the database if one with the same holder and type does not already exist.
+	 * @param account The account to add to the database.
+	 * @return true if the account was successfully added to the database, false if not.
+	 */
 	public boolean open(Account account)
 	{
-		if(numAcct == accounts.length) 
+		if(numAcct == accounts.length)
 		{
 			grow();
 		}
@@ -69,13 +87,23 @@ public class AccountDatabase
 
 	public boolean close(Account account)
 	{
-		account.close();
-		return false;
+		int accountIndex = find(account);
+
+		Account close = accounts[accountIndex];
+		if(close.isClosed()) return false;
+
+		close.close();
+		return true;
 		/*
 		 * There are two errors:
 		 * The account does not exist
 		 * The account exists but is already closed
 		 */
+	}
+
+	public boolean isThere(Account account)
+	{
+		return find(account) >= 0;
 	}
 
 	public void deposit(Account account) { }
@@ -106,7 +134,7 @@ public class AccountDatabase
 
 		System.out.println("*end of list.\n");
 	}
-	
+
 	/**
 	 * Prints the same info as the print() method plus the monthly interest and fee for each account in the system.
 	 * Prints in whatever order they may be in.
@@ -176,5 +204,4 @@ public class AccountDatabase
 		accounts[a] = accounts[b];
 		accounts[b] = temp;
 	}
-
 }

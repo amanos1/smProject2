@@ -4,10 +4,11 @@ public class MoneyMarket extends Savings
 {
 	public boolean loyal;
 	private int withdrawls;
-	private final double YEARLY_INTEREST = 0.008;
-	private final double LOYAL_INTEREST = 0.0095;
-	private final double FEE = 10;
-	private final int FEE_WAIVE = 2500;
+
+	private static final double YEARLY_INTEREST = 0.008;
+	private static final double LOYAL_INTEREST = 0.0095;
+	private static final double FEE = 10;
+	private static final int LOYAL_MIN = 2500;
 
 	/**
 	 * Creates an instance of the MoneyMarket class when given the holder and initial deposit.
@@ -22,11 +23,14 @@ public class MoneyMarket extends Savings
 		this.withdrawls = 0;
 	}
 
+	/**
+	 * Withdraws money from an account, but sets the account to not loyal if balance goes below $2500.
+	 */
 	@Override
 	public void withdraw(double amount)
 	{
 		super.withdraw(amount);
-		if(balance < 2500) loyal = false;
+		if(balance < LOYAL_MIN) loyal = false;
 		withdrawls++;
 		
 	}
@@ -50,7 +54,7 @@ public class MoneyMarket extends Savings
 	@Override
 	public double fee()
 	{
-		if(balance >= FEE_WAIVE) return 0;
+		if(balance >= LOYAL_MIN) return 0;
 		return FEE;
 	}
 

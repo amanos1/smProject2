@@ -7,6 +7,7 @@ public class BankTeller
 {
 	private AccountDatabase database;
 
+	private static final int MONEY_MARKET_MIN = 2500;
 	/**
      * This function serves as the backbone of the program.
      * It reads lines of input and either calls a function accordingly or prints "Invalid Command!"
@@ -42,25 +43,32 @@ public class BankTeller
 	    System.out.println("Bank Teller is terminated.");	    
 	}
 
-	private Profile createProfile(String input)
+	/**
+	 * Creates a Profile object with the information provided.
+	 * @param input The input string containing information about the Profile.
+	 * @param st The StringTokenizer we use to parse the input string. 
+	 * @param open Boolean for whether the Profile is being used for opening or closing an account.
+	 * @return The resulting profile or null if the data in the input string would result in an invalid profile.
+	 */
+	private Profile createProfile(String input, StringTokenizer st, boolean open)
 	{
-	    StringTokenizer st = new StringTokenizer(input, " ");
-	    st.nextToken();
-	    st.nextToken();
 	    if(!st.hasMoreTokens()) {
-	    	System.out.println("Missing data for opening an account.");
+	    	if (open) System.out.println("Missing data for opening an account.");
+	    	else      System.out.println("Missing data for closing an account.");
 	    	return null;
 	    }
 	    String fname = st.nextToken();
 
 	    if(!st.hasMoreTokens()) {
-	    	System.out.println("Missing data for opening an account.");
+	    	if (open) System.out.println("Missing data for opening an account.");
+	    	else      System.out.println("Missing data for closing an account.");
 	    	return null;
 	    }
 	    String lname = st.nextToken();
 
 	    if(!st.hasMoreTokens()) {
-	    	System.out.println("Missing data for opening an account.");
+	    	if (open) System.out.println("Missing data for opening an account.");
+	    	else      System.out.println("Missing data for closing an account.");
 	    	return null;
 	    }
 
@@ -76,15 +84,16 @@ public class BankTeller
 		return p;
 	}
 
-	private Account createAccount(String input, String type, Profile profile)
+	/**
+	 * Creates an Account object with the info provided.
+	 * @param input The string containing information about the account to open.
+	 * @param type The type of account in string form.
+	 * @param profile The holder of the account as a Profile object.
+	 * @param st The StringTokenizer we use to parse the input string.
+	 * @return The resulting account or null if the data in the input string would result in an invalid account.
+	 */
+	private Account createAccount(String input, String type, Profile profile, StringTokenizer st)
 	{
-	    StringTokenizer st = new StringTokenizer(input, " ");
-	    st.nextToken();
-	    st.nextToken();
-	    st.nextToken();
-	    st.nextToken();
-	    st.nextToken();
-
 	    Account a;
 	    double init;
 
@@ -191,7 +200,7 @@ public class BankTeller
 			    {
 			    	System.out.println("Initial deposit cannot be 0 or negative.");
 			    	return null;
-			    } else if (init < 2500)
+			    } else if (init < MONEY_MARKET_MIN)
 			    {
 			    	System.out.println("Minimum of $2500 to open a MoneyMarket account.");
 			    }
@@ -223,10 +232,10 @@ public class BankTeller
 	    String type = st.nextToken();
 
 
-	    Profile profile = createProfile(com);
+	    Profile profile = createProfile(com, st, true);
 	    if(profile == null) return;
 
-	    Account account = createAccount(com, type, profile);
+	    Account account = createAccount(com, type, profile, st);
 	    if(account == null) return;
 
 	    if(!database.open(account))
@@ -238,9 +247,42 @@ public class BankTeller
 	    }
 	}
 
+	/**
+	 * Closes an account with the information in the given string.
+	 * Prints an error message if the command is invalid or the account cannot be closed.
+	 * @param com The input string containing information about the account to be closed.
+	 */
 	private void close(String com)
 	{
-		return;
+	    StringTokenizer st = new StringTokenizer(com, " ");
+	    st.nextToken();
+	    if(!st.hasMoreTokens())
+	    {
+	    	System.out.println("Invalid Command!");
+	    	return;
+	    }
+
+	    String type = st.nextToken();
+
+	    Profile profile = createProfile(com, st, false);
+	    if(profile == null) return;
+
+	    Account closeIt;
+	    if(type.equals("C"))       closeIt = new Checking(profile);
+	    else if(type.equals("CC")) closeIt = new CollegeChecking(profile, 1, 0);
+	    else if(type.equals("S"))  closeIt = new Savings(profile, 1, true);
+	    else                       closeIt = new MoneyMarket(profile, MONEY_MARKET_MIN);
+
+	    if(!database.isThere(closeIt))
+	    {
+	    	System.out.println("Account cannot be closed because it does not exist.");
+	    	return;
+	    }
+
+	    if(!database.close(closeIt))
+	    {
+	    	System.out.println("Account is closed already.");
+	    }
 	}
 
 	private void deposit(String com)

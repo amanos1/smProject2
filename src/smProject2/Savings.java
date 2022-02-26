@@ -43,6 +43,9 @@ public class Savings extends Account
 		return FEE;
 	}
 
+	/**
+	 * Does the same as the general Account's close method, but also sets the account to be not loyal.
+	 */
 	@Override
 	public void close()
 	{

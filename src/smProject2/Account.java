@@ -64,11 +64,27 @@ public abstract class Account {
 		balance += amount;
 	}
 
+	/**
+	 * Returns the balance.
+	 * @return The balance.
+	 */
 	public double getBalance()
 	{
 		return balance;
 	}
 
+	/**
+	 * Returns whether or not the account is closed.
+	 * @return true if account is closed, false if not.
+	 */
+	public boolean isClosed()
+	{
+		return closed;
+	}
+
+	/**
+	 * Sets an account to closed and resets the balance to zero.
+	 */
 	public void close()
 	{
 		closed = true;
@@ -80,7 +96,21 @@ public abstract class Account {
 		closed = false;
 	}
 
-	public abstract double monthlyInterest(); //return the monthly interest
-	public abstract double fee(); //return the monthly fee
-	public abstract String getType(); //return the account type (class name)
+	/**
+	 * Returns the monthly interest.
+	 * @return The monthly interest.
+	 */
+	public abstract double monthlyInterest();
+
+	/**
+	 * Returns the monthly fee.
+	 * @return The monthly fee.
+	 */
+	public abstract double fee();
+
+	/**
+	 * Returns the account type (class name).
+	 * @return The account type as a string.
+	 */
+	public abstract String getType();
 }

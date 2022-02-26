@@ -18,7 +18,12 @@ public class Profile
 		this.lname = lname;
 		this.dob = new Date(dob);
 	}
-	
+
+	/**
+	 * Determines if two profiles are for the same person.
+	 * @param p The profile to compare against.
+	 * @return true if the accounts have the same name and birth date, false if not.
+	 */
 	public boolean isEquals(Profile p) 
 	{
 		return (fname.toLowerCase().equals(p.fname.toLowerCase())
