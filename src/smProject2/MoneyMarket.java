@@ -69,6 +69,12 @@ public class MoneyMarket extends Savings
 		return "Money Market Savings";
 	}
 	
+	public boolean equals(Object obj) 
+	{
+		MoneyMarket mm = (MoneyMarket)obj;
+		return (super.equals(mm));
+	}
+	
 	/**
 	 * Returns a string representation of the Account
 	 * @return a string representation of the Account
