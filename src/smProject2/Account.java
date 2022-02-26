@@ -5,6 +5,9 @@ public abstract class Account {
 	protected boolean closed;
 	protected double balance;
 
+	/**
+	 * This constructor with no arguments will never be run, but I need it to run the program without an error.
+	 */
 	public Account() { }
 
 	/**
@@ -24,8 +27,8 @@ public abstract class Account {
 	@Override
 	public boolean equals(Object obj)
 	{
-		Account newAccount = (Account)obj;
-		return holder.equals(newAccount.holder);
+		Account newAccount = (Account) obj;
+		return holder.isEquals(newAccount.holder) && getType().equals(newAccount.getType());
 	}
 
 	/**
@@ -59,6 +62,22 @@ public abstract class Account {
 	public void deposit(double amount)
 	{
 		balance += amount;
+	}
+
+	public double getBalance()
+	{
+		return balance;
+	}
+
+	public void close()
+	{
+		closed = true;
+		balance = 0;
+	}
+
+	public void unclose()
+	{
+		closed = false;
 	}
 
 	public abstract double monthlyInterest(); //return the monthly interest

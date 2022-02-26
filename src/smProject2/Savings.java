@@ -1,5 +1,4 @@
 package smProject2;
-import src.Month;
 
 public class Savings extends Account
 {
@@ -16,11 +15,11 @@ public class Savings extends Account
 	 * @param holder The holder of the account. Should be Profile class.
 	 * @param init the initial deposit.
 	 */
-	public Savings(Profile holder, double init, int loyal)
+	public Savings(Profile holder, double init, boolean loyal)
 	{
 		this.holder = holder;
 		this.balance = init;
-		this.loyal = loyal == 1;
+		this.loyal = loyal;
 	}
 
 	/**
@@ -44,6 +43,13 @@ public class Savings extends Account
 		return FEE;
 	}
 
+	@Override
+	public void close()
+	{
+		super.close();
+		loyal = false;
+	}
+
 	/**
 	 * Returns a string containing the type of account.
 	 * For use with the AccountDatabase.print method.
@@ -53,11 +59,15 @@ public class Savings extends Account
 	{
 		return "Savings";
 	}
-	
-	public boolean equals(Object obj) 
+
+	/**
+	 * Because there can be many savings accounts held by one person, Saving's version of equals() also checks that the balances are equal.
+	 * @param s The account to compare ours to.
+	 * @return true if the accounts have the same holder and balance, false if not.
+	 */
+	public boolean equals(Savings s) 
 	{
-		Savings s = (Savings)obj;
-		return (super.equals(s) && this.getType().equals(s.getType()));
+		return super.equals(s) && this.balance == s.getBalance();
 	}
 
 	/**
@@ -67,9 +77,8 @@ public class Savings extends Account
 	@Override
 	public String toString()
 	{
-		String acc = getType() + "::" + holder.toString() + "::Balance $" + balance;
-		if(closed) acc += "::CLOSED";
-		else if(loyal) acc += "::Loyal";
+		String acc = super.toString();
+		if(loyal && !closed) acc += "::Loyal";
 		return acc;
 	}
 }

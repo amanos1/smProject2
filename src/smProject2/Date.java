@@ -15,6 +15,13 @@ public class Date implements Comparable<Date>
 	private int month;
 	private int day;
 
+	final static int MIN_YEAR = 1900;
+	final static int MIN_MONTH = 1;
+	final static int TOTAL_FEB_DAYS = 28;
+	final static int TOTAL_FEB_LEAP_DAYS = 29;
+	final static int TOTAL_AJSN_DAYS = 30; //AJSN = April, June, September, and November
+	final static int TOTAL_MONTH_DAYS = 31;
+
 	/**
 	 * When given no arguments, the constructor creates an instance of date with the current date,
 	 * as provided by Java's Calendar library.
@@ -128,12 +135,6 @@ public class Date implements Comparable<Date>
 	 */
 	public boolean isValid()
 	{
-		final int MIN_YEAR = 1900;
-		final int MIN_MONTH = 1;
-		final int TOTAL_FEB_DAYS = 28;
-		final int TOTAL_FEB_LEAP_DAYS = 29;
-		final int TOTAL_AJSN_DAYS = 30; //AJSN = April, June, September, and November
-		final int TOTAL_MONTH_DAYS = 31;
 		boolean leapYear = isLeapYear(year);
 		Calendar today = Calendar.getInstance();
 

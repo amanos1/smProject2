@@ -25,40 +25,184 @@ public class BankTeller
 	        command = scn.nextLine();
 	        commandList = command.split(" ");
 
-	        if(commandList[0].equals("Q")) break;
-	        switch(commandList[0])
-	        {
-		        case "O":
-		        	open(command);
-		            break;
-		        case "C":
-		        	close(command);
-		            break;
-		        case "D":
-		            deposit(command);
-		            break;
-		        case "W":
-		            withdraw(command);
-		            break;
-		        case "P":
-		        	database.print();
-		            break;
-		        case "PT":
-		        	database.printByAccountType();
-		            break;
-		        case "PI":
-		        	database.printFeeAndInterest();
-		            break;
-		        case "UB":
-		        	update();
-		            break;
-		        default:
-		        	System.out.println("Invalid command!");
-	        }
+	        String c = commandList[0];
+	        if(c.equals("Q")) break;
+	        else if(c.equals("O")) open(command);
+	        else if(c.equals("C")) close(command);
+	        else if(c.equals("D")) deposit(command);
+	        else if(c.equals("W")) withdraw(command);
+	        else if(c.equals("P")) database.print();
+	        else if(c.equals("PT")) database.printByAccountType();
+	        else if(c.equals("PI")) database.printFeeAndInterest();
+	        else if(c.equals("UB")) update();
+	        else System.out.println("Invalid command!");
 	    }
 
 	    scn.close();
 	    System.out.println("Bank Teller is terminated.");	    
+	}
+
+	private Profile createProfile(String input)
+	{
+	    StringTokenizer st = new StringTokenizer(input, " ");
+	    st.nextToken();
+	    st.nextToken();
+	    if(!st.hasMoreTokens()) {
+	    	System.out.println("Missing data for opening an account.");
+	    	return null;
+	    }
+	    String fname = st.nextToken();
+
+	    if(!st.hasMoreTokens()) {
+	    	System.out.println("Missing data for opening an account.");
+	    	return null;
+	    }
+	    String lname = st.nextToken();
+
+	    if(!st.hasMoreTokens()) {
+	    	System.out.println("Missing data for opening an account.");
+	    	return null;
+	    }
+
+	    String dob = st.nextToken();
+	    Date birth = new Date(dob);
+
+	    if(!birth.isValid())
+	    {
+	    	System.out.println("Date of birth invalid.");
+	    }
+
+	    Profile p = new Profile(fname, lname, dob);
+		return p;
+	}
+
+	private Account createAccount(String input, String type, Profile profile)
+	{
+	    StringTokenizer st = new StringTokenizer(input, " ");
+	    st.nextToken();
+	    st.nextToken();
+	    st.nextToken();
+	    st.nextToken();
+	    st.nextToken();
+
+	    Account a;
+	    double init;
+
+	    switch(type)
+	    {
+		    case "C":
+		    	a = new Checking(profile);
+		    	break;
+
+		    case "CC":
+			    if(!st.hasMoreTokens())
+			    {
+			    	System.out.println("Missing data for opening an account.");
+			    	return null;
+			    }
+
+			    try
+			    {
+			    	init = Double.parseDouble(st.nextToken());
+			    } catch (NumberFormatException e)
+			    {
+			    	System.out.println("Not a valid amount.");
+			    	return null;
+			    }
+
+			    if(!st.hasMoreTokens())
+			    {
+			    	System.out.println("Missing data for opening an account.");
+			    	return null;
+			    }
+
+			    int campus;
+			    try
+			    {
+			    	campus = Integer.parseInt(st.nextToken());
+			    } catch(NumberFormatException e)
+			    {
+			    	System.out.println("Not a valid amount.");
+			    	return null;
+			    }
+
+			    if(init <= 0)
+			    {
+			    	System.out.println("Initial deposit cannot be 0 or negative.");
+			    	return null;
+			    }
+
+			    if(campus > 2 || campus < 0)
+			    {
+			    	System.out.println("Invalid campus code.");
+			    }
+
+			    a = new CollegeChecking(profile, init, campus);
+		    	break;
+
+		    case "S":
+			    if(!st.hasMoreTokens())
+			    {
+			    	System.out.println("Missing data for opening an account.");
+			    	return null;
+			    }
+
+			    try
+			    {
+			    	init = Double.parseDouble(st.nextToken());
+			    } catch (NumberFormatException e)
+			    {
+			    	System.out.println("Not a valid amount.");
+			    	return null;
+			    }
+			    if(!st.hasMoreTokens())
+			    {
+			    	System.out.println("Missing data for opening an account.");
+			    	return null;
+			    }
+		    	String loyal = st.nextToken();
+
+		    	if(init <= 0)
+			    {
+			    	System.out.println("Initial deposit cannot be 0 or negative.");
+			    	return null;
+			    }
+
+		    	a = new Savings(profile, init, loyal.equals("1"));
+		    	break;
+
+		    case "MM":
+			    if(!st.hasMoreTokens())
+			    {
+			    	System.out.println("Missing data for opening an account.");
+			    	return null;
+			    }
+
+			    try
+			    {
+			    	init = Double.parseDouble(st.nextToken());
+			    } catch(NumberFormatException e)
+			    {
+			    	System.out.println("Not a valid amount.");
+			    	return null;
+			    }
+
+		    	if(init <= 0)
+			    {
+			    	System.out.println("Initial deposit cannot be 0 or negative.");
+			    	return null;
+			    } else if (init < 2500)
+			    {
+			    	System.out.println("Minimum of $2500 to open a MoneyMarket account.");
+			    }
+
+			    a = new MoneyMarket(profile, init);
+		    	break;
+
+		    default:
+	    		a = null;
+	    }
+	    return a;
 	}
 
 	/**
@@ -68,40 +212,30 @@ public class BankTeller
 	 */
 	private void open(String com)
 	{
-	    StringTokenizer st = new StringTokenizer(com," ");
+	    StringTokenizer st = new StringTokenizer(com, " ");
 	    st.nextToken();
-	    String type = st.nextToken();
-	    String fname = st.nextToken();
-	    String lname = st.nextToken();
-	    String dob = st.nextToken();
-	    
-	    Profile profile = new Profile(fname, lname, dob);
-	    
-	    Account account;
-	    switch(type)
+	    if(!st.hasMoreTokens())
 	    {
-		    case "C":
-		    	account = new Checking(profile);
-		    	database.open(account);
-		    	break;
-		    case "CC":
-		    	double init = Double.parseDouble(st.nextToken());
-		    	int campus = Integer.parseInt(st.nextToken());
-		    	account = new CollegeChecking(profile, init, campus);
-		    	break;
-		    case "S":
-		    	double initDeposit = Double.parseDouble(st.nextToken());
-		    	int loyal = Integer.parseInt(st.nextToken());
-		    	account = new Savings(profile, initDeposit, loyal);
-		    	break;
-		    case "MM":
-		    	double initDepossit = Double.parseDouble(st.nextToken());
-		    	account = new MoneyMarket(profile, initDepossit);
-		    	break;
+	    	System.out.println("Invalid Command!");
+	    	return;
 	    }
 
-	  //  Date appointmentDate = new Date(st.nextToken());
-		return;
+	    String type = st.nextToken();
+
+
+	    Profile profile = createProfile(com);
+	    if(profile == null) return;
+
+	    Account account = createAccount(com, type, profile);
+	    if(account == null) return;
+
+	    if(!database.open(account))
+	    {
+	    	System.out.println(profile + " same account(type) is in the database.");
+	    } else
+	    {
+	    	System.out.println("Account opened.");
+	    }
 	}
 
 	private void close(String com)

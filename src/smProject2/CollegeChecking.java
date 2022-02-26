@@ -1,5 +1,4 @@
 package smProject2;
-import src.Month;
 
 public class CollegeChecking extends Checking
 {
@@ -68,12 +67,6 @@ public class CollegeChecking extends Checking
 		}
 	}
 	
-	public boolean equals(Object obj) 
-	{
-		CollegeChecking newAccount = (CollegeChecking)obj;
-		return (super.equals(newAccount) && this.getCampus().equals(newAccount.getCampus()));
-	}
-
 	/**
 	 * Returns a string representation of the Account
 	 * @return a string representation of the Account
@@ -81,9 +74,8 @@ public class CollegeChecking extends Checking
 	@Override
 	public String toString()
 	{
-		String acc = getType() + "::" + holder.toString() + "::Balance $" + balance;
-		if(closed) acc += "::CLOSED";
-		acc += ":: " + getCampus();
+		String acc = super.toString();
+		acc += "::" + getCampus();
 		return acc;
 	}
 }

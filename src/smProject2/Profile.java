@@ -1,5 +1,5 @@
 package smProject2;
-import src.Date;
+
 public class Profile
 {
 	private String fname;
@@ -21,7 +21,9 @@ public class Profile
 	
 	public boolean isEquals(Profile p) 
 	{
-		return (fname.equals(p.fname) && lname.equals(p.lname) && dob.equals(p.dob));
+		return (fname.toLowerCase().equals(p.fname.toLowerCase())
+				&& lname.toLowerCase().equals(p.lname.toLowerCase())
+				&& dob.equals(p.dob));
 	}
 
 	/**

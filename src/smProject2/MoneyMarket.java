@@ -1,5 +1,4 @@
 package smProject2;
-import src.Month;
 
 public class MoneyMarket extends Savings
 {
@@ -66,12 +65,6 @@ public class MoneyMarket extends Savings
 		return "Money Market Savings";
 	}
 	
-	public boolean equals(Object obj) 
-	{
-		MoneyMarket mm = (MoneyMarket)obj;
-		return (super.equals(mm));
-	}
-
 	/**
 	 * Returns a string representation of the Account
 	 * @return a string representation of the Account
@@ -79,9 +72,7 @@ public class MoneyMarket extends Savings
 	@Override
 	public String toString()
 	{
-		String acc = getType() + "::" + holder.toString() + "::Balance $" + balance;
-		if(closed) acc += "::CLOSED";
-		else if(loyal) acc += "::Loyal";
+		String acc = super.toString();
 		acc += "::withdrawl: " + withdrawls;
 		return acc;
 	}

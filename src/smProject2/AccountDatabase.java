@@ -4,18 +4,20 @@ public class AccountDatabase
 {
 	private Account [] accounts;
 	private int numAcct;
-	
+
+	private final static int GROW_AMOUNT = 4;
+
 	public AccountDatabase() 
 	{
-		accounts = new Account[4];
+		accounts = new Account[GROW_AMOUNT];
 		numAcct = 0;
 	}
 
 	private int find(Account account)
 	{
-		for(int i = 0; i < accounts.length; i++) 
+		for(int i = 0; i < numAcct; i++) 
 		{
-			if(accounts[i].equals(account) && accounts[i] != null) 
+			if(accounts[i].equals(account)) 
 			{
 				return i;
 			}
@@ -25,13 +27,18 @@ public class AccountDatabase
 
 	private void grow() 
 	{
-			Account [] temp = new Account[accounts.length];
-			for(int i = 0; i < accounts.length; i++) 
+			Account [] temp = new Account[accounts.length + GROW_AMOUNT];
+			for(int i = 0; i < numAcct; i++) 
 			{
 				temp[i] = accounts[i];
 			}
 			accounts = temp;
 		
+	}
+
+	private boolean checkingConflict(Account account)
+	{
+		return !(find(account) == -1);
 	}
 
 	public boolean open(Account account)
@@ -40,22 +47,19 @@ public class AccountDatabase
 		{
 			grow();
 		}
-		for(int i = 0; i < accounts.length; i++) 
+
+		if(account.getType().equals("Checking") || account.getType().equals("College Checking"))
 		{
-			if(find(account) != -1) 
-			{
-				return false;
-			}
-			if(accounts[i] == null) 
-			{
-				accounts[i] = account;
-			}
+			if(checkingConflict(account)) return false;
 		}
+
+		accounts[numAcct++] = account;
 		return true;
 	}
 
 	public boolean close(Account account)
 	{
+		account.close();
 		return false;
 	}
 
@@ -71,8 +75,9 @@ public class AccountDatabase
 	 * Prints in whatever order they may be in.
 	 */
 	public void print() {
-		for(Account a : accounts)
+		for(int i = 0; i < numAcct; i++)
 		{
+			Account a = accounts[i];
 			System.out.println(a.toString());
 		}
 	}
