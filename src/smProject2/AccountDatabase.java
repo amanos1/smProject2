@@ -202,7 +202,7 @@ public class AccountDatabase
 			depositAmount(i, accounts[i].monthlyInterest());
 			accounts[i].deductFees();
 		}
-		print();
+		System.out.println(accounts[i].getType()+": :"+accounts[i].holder+": :"+"Balance: "+accounts[i].balance);
 	}
 	
 	/**
