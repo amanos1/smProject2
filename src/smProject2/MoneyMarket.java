@@ -32,6 +32,17 @@ public class MoneyMarket extends Savings
 	}
 
 	/**
+	 * Reopens an account and initializes it with the information in the given Account.
+	 * @param acc The account to copy information from.
+	 */
+	@Override
+	public void unclose(Account acc)
+	{
+		super.unclose(acc);
+		loyal = true;
+	}
+
+	/**
 	 * Returns the monthly interest.
 	 * @return The monthly interest.
 	 */
@@ -50,7 +61,8 @@ public class MoneyMarket extends Savings
 	@Override
 	public double fee()
 	{
-		if(balance >= FEE_WAIVE && this.withdrawls <= TOTAL_ALLOWED_WITHDRAWALS) return 0;
+		if(balance >= FEE_WAIVE
+				&& withdrawls <= TOTAL_ALLOWED_WITHDRAWALS) return 0;
 		return FEE;
 	}
 

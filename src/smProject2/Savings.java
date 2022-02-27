@@ -2,7 +2,7 @@ package smProject2;
 
 public class Savings extends Account
 {
-	private boolean loyal;
+	protected boolean loyal;
 
 	private static final double INTEREST = 0.003;
 	private static final double LOYAL_INTEREST = 0.0045;

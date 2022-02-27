@@ -63,6 +63,16 @@ public class AccountDatabase
 		}
 	}
 
+	public boolean reopen(Account account)
+	{
+		int index = find(account);
+		if (index < 0) return false;
+		if(!accounts[index].isClosed()) return false;
+
+		accounts[index].unclose(account);
+		return true;
+	}
+
 	/**
 	 * Adds an account to the database if one with the same holder and type does not already exist.
 	 * @param account The account to add to the database.
@@ -96,11 +106,6 @@ public class AccountDatabase
 
 		close.close();
 		return true;
-		/*
-		 * There are two errors:
-		 * The account does not exist
-		 * The account exists but is already closed
-		 */
 	}
 
 	/**
@@ -121,7 +126,10 @@ public class AccountDatabase
 
 	public boolean withdraw(Account account)
 	{
-		return false;
+		Account original = accounts[find(account)];
+		if(account.getBalance() > original.getBalance()) return false;
+		original.withdraw(account.balance);
+		return true;
 	} //return false if insufficient fund
 
 	/**
@@ -193,7 +201,7 @@ public class AccountDatabase
 			}
 		}
 
-		System.out.println("\n*list of accounts with fee and monthly interest");
+		System.out.println("\n*list of accounts by account type.");
 
 		for(int i = 0; i < numAcct; i++)
 		{

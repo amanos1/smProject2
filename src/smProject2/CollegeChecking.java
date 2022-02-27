@@ -38,7 +38,7 @@ public class CollegeChecking extends Checking
 	@Override
 	public double monthlyInterest()
 	{
-		return YEARLY_INTEREST / Month.TOTAL_MONTHS;
+		return balance * (YEARLY_INTEREST / Month.TOTAL_MONTHS);
 	}
 
 	/**
@@ -66,7 +66,25 @@ public class CollegeChecking extends Checking
 			default: return "";
 		}
 	}
-	
+
+	public int getCampusCode()
+	{
+		return campus;
+	}
+
+	/**
+	 * Reopens an account and initializes it with the information in the given Account.
+	 * @param acc The account to copy information from.
+	 */
+	@Override
+	public void unclose(Account acc)
+	{
+		super.unclose(acc);
+
+		CollegeChecking cc = (CollegeChecking) acc;
+		campus = cc.getCampusCode();
+	}
+
 	/**
 	 * Returns a string representation of the Account
 	 * @return a string representation of the Account

@@ -54,10 +54,7 @@ public abstract class Account {
 	 */
 	public void withdraw(double amount)
 	{
-		if(balance - amount >= 0) 
-		{
-			balance -= amount;
-		}
+		balance -= amount;
 	}
 
 	/**
@@ -96,9 +93,14 @@ public abstract class Account {
 		balance = 0;
 	}
 
-	public void unclose()
+	/**
+	 * Reopens an account and initializes it with the information in the given Account.
+	 * @param acc The account to copy information from.
+	 */
+	public void unclose(Account acc)
 	{
 		closed = false;
+		balance = acc.getBalance();
 	}
 	
 	/**
