@@ -1,14 +1,13 @@
 package smProject2;
-import src.Month;
 
 public class MoneyMarket extends Savings
 {
-	public boolean loyal;
 	private int withdrawls;
-	private final double YEARLY_INTEREST = 0.008;
-	private final double LOYAL_INTEREST = 0.0095;
-	private final double FEE = 10;
-	private final int FEE_WAIVE = 2500;
+
+	private static final double YEARLY_INTEREST = 0.008;
+	private static final double LOYAL_INTEREST = 0.0095;
+	private static final double FEE = 10;
+	private static final int FEE_WAIVE = 2500;
 	private static final int TOTAL_ALLOWED_WITHDRAWALS = 3;
 
 	/**
@@ -30,12 +29,6 @@ public class MoneyMarket extends Savings
 		super.withdraw(amount);
 		if(balance < 2500) loyal = false;
 		withdrawls++;
-		
-	}
-	
-	public void deductWithdrawls() 
-	{
-		this.withdrawls--;
 	}
 
 	/**
@@ -60,7 +53,6 @@ public class MoneyMarket extends Savings
 		if(balance >= FEE_WAIVE && this.withdrawls <= TOTAL_ALLOWED_WITHDRAWALS) return 0;
 		return FEE;
 	}
-	
 
 	/**
 	 * Returns a string containing the type of account.
@@ -72,12 +64,6 @@ public class MoneyMarket extends Savings
 	{
 		return "Money Market Savings";
 	}
-	
-	public boolean equals(Object obj) 
-	{
-		MoneyMarket mm = (MoneyMarket)obj;
-		return (super.equals(mm));
-	}
 
 	/**
 	 * Returns a string representation of the Account
@@ -86,9 +72,7 @@ public class MoneyMarket extends Savings
 	@Override
 	public String toString()
 	{
-		String acc = getType() + "::" + holder.toString() + "::Balance $" + balance;
-		if(closed) acc += "::CLOSED";
-		else if(loyal) acc += "::Loyal";
+		String acc = super.toString();
 		acc += "::withdrawl: " + withdrawls;
 		return acc;
 	}

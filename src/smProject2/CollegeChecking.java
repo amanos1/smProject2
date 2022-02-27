@@ -18,7 +18,7 @@ public class CollegeChecking extends Checking
 	{
 		this.holder = holder;
 		this.balance = init;
-		this.campus = campus;
+		this.campus = campusCode;
 	}
 
 	/**
@@ -65,12 +65,6 @@ public class CollegeChecking extends Checking
 			case NEWARK: return "NEWARK";
 			default: return "";
 		}
-	}
-	
-	public boolean equals(Object obj) 
-	{
-		CollegeChecking newAccount = (CollegeChecking)obj;
-		return (super.equals(newAccount) && this.getCampus().equals(newAccount.getCampus()));
 	}
 	
 	/**

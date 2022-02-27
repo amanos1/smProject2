@@ -1,5 +1,5 @@
 package smProject2;
-
+import java.text.DecimalFormat;
 
 public abstract class Account {
 	protected Profile holder;
@@ -23,13 +23,15 @@ public abstract class Account {
 	}
 
 	/**
-	 * WHAT I WRITE AS A DESCRIPTION FOR THIS FUNCTION DEPENDS ON HOW THIS EQUALS FUNCTION IS USED IN THE PROGRAM
+	 * Determines if two accounts are equal to each other.
+	 * @return true if the accounts have the same holder & type, false if not.
 	 */
 	@Override
 	public boolean equals(Object obj)
 	{
 		Account newAccount = (Account) obj;
-		return this.holder.isEquals(newAccount.holder) && getType().equals(newAccount.getType());
+		return this.holder.isEquals(newAccount.holder)
+				&& getType().equals(newAccount.getType());
 	}
 
 	/**
@@ -39,7 +41,9 @@ public abstract class Account {
 	@Override
 	public String toString()
 	{
-		String acc = String.format("%s::%s::Balance $%.2f", getType(), holder, balance);
+		DecimalFormat df = new DecimalFormat("###,###.##");
+		String acc = String.format("%s::%s::Balance $%s",
+				getType(), holder, df.format(balance));
 		if(closed) acc += "::CLOSED";
 		return acc;
 	}
@@ -100,8 +104,11 @@ public abstract class Account {
 	/**
 	 * Deducts fees from balance if it is not waived.
 	 */
-	public abstract void deductFees();
-	
+	public void deductFees() 
+	{
+		if(balance > fee()) balance -= fee();
+		else balance = 0;
+	}
 
 	/**
 	 * Returns the monthly interest.

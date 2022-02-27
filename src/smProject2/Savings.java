@@ -1,13 +1,13 @@
 package smProject2;
-import src.Month;
 
 public class Savings extends Account
 {
 	private boolean loyal;
-	private final double INTEREST = 0.003;
-	private final double LOYAL_INTEREST = 0.0045;
-	private final double FEE = 6;
-	private final int FEE_WAIVE = 300;
+
+	private static final double INTEREST = 0.003;
+	private static final double LOYAL_INTEREST = 0.0045;
+	private static final double FEE = 6;
+	private static final int FEE_WAIVE = 300;
 
 	public Savings() { }
 
@@ -29,7 +29,8 @@ public class Savings extends Account
 	 */
 	public double monthlyInterest()
 	{
-		if(loyal) return this.balance * (LOYAL_INTEREST / Month.TOTAL_MONTHS);
+		if(loyal) 
+			return this.balance * (LOYAL_INTEREST / Month.TOTAL_MONTHS);
 		return this.balance * (INTEREST / Month.TOTAL_MONTHS);
 	}
 
@@ -64,17 +65,6 @@ public class Savings extends Account
 	{
 		return "Savings";
 	}
-	
-	public void deductFees() 
-	{
-		this.balance -= this.fee();
-	}
-	
-	public boolean equals(Object obj) 
-	{
-		Savings s = (Savings)obj;
-		return (super.equals(s) && this.getType().equals(s.getType()));
-	}
 
 	/**
 	 * Returns a string representation of the Account
@@ -83,9 +73,8 @@ public class Savings extends Account
 	@Override
 	public String toString()
 	{
-		String acc = getType() + "::" + holder.toString() + "::Balance $" + balance;
-		if(closed) acc += "::CLOSED";
-		else if(loyal) acc += "::Loyal";
+		String acc = super.toString();
+		if(loyal) acc += "::Loyal";
 		return acc;
 	}
 }

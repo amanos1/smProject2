@@ -1,5 +1,5 @@
 package smProject2;
-import src.Month;
+
 public class Checking extends Account
 {
 	private final double YEARLY_INTEREST = 0.001;
@@ -12,9 +12,10 @@ public class Checking extends Account
 	 * Creates an instance of the Checking class when given just the holder.
 	 * @param holder The holder of the account. Should be Profile class.
 	 */
-	public Checking(Profile holder)
+	public Checking(Profile holder, double init)
 	{
 		this.holder = holder;
+		this.balance = init;
 	}
 
 	/**
@@ -23,20 +24,16 @@ public class Checking extends Account
 	 */
 	public double monthlyInterest()
 	{
-		return this.balance * (YEARLY_INTEREST / Month.TOTAL_MONTHS);
+		return balance * (YEARLY_INTEREST / Month.TOTAL_MONTHS);
 	}
-	
+
+	/**
+	 * Returns the holder of the account.
+	 * @return The holder of the account as a Profile class.
+	 */
 	public Profile getHolder()
 	{
 		return holder;
-	}
-	
-	public void deductFees() 
-	{
-		if(this.balance > FEE) 
-		{
-			this.balance -= this.fee();
-		}
 	}
 
 	/**
@@ -48,22 +45,6 @@ public class Checking extends Account
 	{
 		if(balance >= FEE_WAIVE) return 0;
 		return FEE; //return the monthly fee
-	}
-	
-	//public void deposit(double amount) 
-	//{
-	//	super.deposit(amount);
-	//}
-	
-	public boolean equals(Object obj) 
-	{
-		Account newAccount = (Account)obj;
-		return (super.equals(obj) && this.getType().equals(newAccount.getType()));
-	}
-	
-	public void deposit(double amount) 
-	{
-		super.deposit(amount);
 	}
 
 	/**
