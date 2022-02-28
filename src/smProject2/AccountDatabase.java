@@ -1,5 +1,9 @@
 package smProject2;
 
+/**
+ * Class that stores all the Accounts in the database and manipulates it.
+ * @author Aaron Browne, Harshkumar Patel
+ */
 public class AccountDatabase 
 {
 	private Account [] accounts;
@@ -19,7 +23,7 @@ public class AccountDatabase
 	/**
 	 * Searches for an account in the database.
 	 * @param account The account to search for.
-	 * @return Index of an account with the same holder & type in the accounts array, -1 if account does not exist
+	 * @return Index of an account with the same holder & type in the accounts array, -1 if account does not exist.
 	 */
 	private int find(Account account)
 	{
@@ -31,7 +35,7 @@ public class AccountDatabase
 	}
 
 	/**
-	 * Increases the 
+	 * Increases the length of the accounts Array by four when the array is filled.
 	 */
 	private void grow() 
 	{
@@ -63,6 +67,11 @@ public class AccountDatabase
 		}
 	}
 
+	/**
+	 * Reopens a closed account.
+	 * @param account An account with the same type and holder as the one to be reopened.
+	 * @return false if the account is not in the database or if it's already open, true otherwise.
+	 */
 	public boolean reopen(Account account)
 	{
 		int index = find(account);
@@ -97,6 +106,11 @@ public class AccountDatabase
 		
 	}
 
+	/**
+	 * Closes an account, if it exists in the database.
+	 * @param account The account to close.
+	 * @return true if the close was successful, false if the account is already closed.
+	 */
 	public boolean close(Account account)
 	{
 		int accountIndex = find(account);
@@ -118,19 +132,28 @@ public class AccountDatabase
 		return find(account) >= 0;
 	}
 
+	/**
+	 * Adds money into an account.
+	 * @param account The account to deposit into, with account.balance being the amount.
+	 */
 	public void deposit(Account account)
 	{
 		Account original = accounts[find(account)];
 		original.deposit(account.balance);
 	}
 
+	/**
+	 * Takes money from an account, if it has enough money.
+	 * @param account The account to withdraw from, with account.balance being the amount.
+	 * @return false if insufficient funds, true otherwise.
+	 */
 	public boolean withdraw(Account account)
 	{
 		Account original = accounts[find(account)];
 		if(account.getBalance() > original.getBalance()) return false;
 		original.withdraw(account.balance);
 		return true;
-	} //return false if insufficient fund
+	}
 
 	/**
 	 * Prints info about all the accounts in the system to the console.

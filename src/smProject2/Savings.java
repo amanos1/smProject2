@@ -1,5 +1,10 @@
 package smProject2;
 
+/**
+ * Subclass of Account that contains information about a Savings account.
+ * Additionally keeps track of whether the account is loyal or not.
+ * @author Aaron Browne, Harshkumar Patel
+ */
 public class Savings extends Account
 {
 	protected boolean loyal;
@@ -9,6 +14,9 @@ public class Savings extends Account
 	private static final double FEE = 6;
 	private static final int FEE_WAIVE = 300;
 
+	/**
+	 * This constructor with no arguments will never be run, but I need it to run the program without an error.
+	 */
 	public Savings() { }
 
 	/**
@@ -30,8 +38,8 @@ public class Savings extends Account
 	public double monthlyInterest()
 	{
 		if(loyal) 
-			return this.balance * (LOYAL_INTEREST / Month.TOTAL_MONTHS);
-		return this.balance * (INTEREST / Month.TOTAL_MONTHS);
+			return balance * (LOYAL_INTEREST / Month.TOTAL_MONTHS);
+		return     balance * (INTEREST / Month.TOTAL_MONTHS);
 	}
 
 	/**

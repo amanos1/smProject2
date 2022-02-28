@@ -1,12 +1,19 @@
 package smProject2;
 
+/**
+ * Subclass of Checking that contains information about
+ * a College Checking account.
+ * Additionally keeps track of which Rutgers campus a student is from.
+ * @author Aaron Browne, Harshkumar Patel
+ */
 public class CollegeChecking extends Checking
 {
 	private int campus;
-	private final int NEW_BRUNSWICK = 0;
-	private final int NEWARK = 1;
-	private final int CAMDEN = 2;
-	private final double YEARLY_INTEREST = 0.0025;
+
+	private static final int NEW_BRUNSWICK = 0;
+	private static final int NEWARK = 1;
+	private static final int CAMDEN = 2;
+	private static final double YEARLY_INTEREST = 0.0025;
 
 	/**
 	 * Creates an instance of the CollegeChecking class.
@@ -67,6 +74,10 @@ public class CollegeChecking extends Checking
 		}
 	}
 
+	/**
+	 * Returns the campus code.
+	 * @return The campus code.
+	 */
 	public int getCampusCode()
 	{
 		return campus;

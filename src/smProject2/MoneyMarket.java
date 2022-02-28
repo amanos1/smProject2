@@ -1,5 +1,10 @@
 package smProject2;
 
+/**
+ * Subclass of Savings that contains information about a Money Market account.
+ * Additionally keeps track of the amount of withdrawals total.
+ * @author Aaron Browne, Harshkumar Patel
+ */
 public class MoneyMarket extends Savings
 {
 	private int withdrawls;
@@ -23,11 +28,16 @@ public class MoneyMarket extends Savings
 		this.withdrawls = 0;
 	}
 
+	/**
+	 * Removes money from an account.
+	 * Sets to account to longer be loyal if it drops below $2,500.
+	 * @param amount The amount to remove.
+	 */
 	@Override
 	public void withdraw(double amount)
 	{
 		super.withdraw(amount);
-		if(balance < 2500) loyal = false;
+		if(balance < FEE_WAIVE) loyal = false;
 		withdrawls++;
 	}
 
@@ -49,8 +59,8 @@ public class MoneyMarket extends Savings
 	@Override
 	public double monthlyInterest()
 	{
-		if(loyal) return this.balance * (LOYAL_INTEREST / Month.TOTAL_MONTHS);
-		return this.balance * (YEARLY_INTEREST / Month.TOTAL_MONTHS);
+		if(loyal) return balance * (LOYAL_INTEREST / Month.TOTAL_MONTHS);
+		return           balance * (YEARLY_INTEREST / Month.TOTAL_MONTHS);
 	}
 
 	/**

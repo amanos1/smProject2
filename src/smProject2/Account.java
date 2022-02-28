@@ -1,6 +1,10 @@
 package smProject2;
 import java.text.DecimalFormat;
 
+/**
+ * Abstract class that contains information about a single account.
+ * @author Aaron Browne, Harshkumar Patel
+ */
 public abstract class Account {
 	protected Profile holder;
 	protected boolean closed;
@@ -41,7 +45,7 @@ public abstract class Account {
 	@Override
 	public String toString()
 	{
-		DecimalFormat df = new DecimalFormat("###,###.##");
+		DecimalFormat df = new DecimalFormat("###,###.00");
 		String acc = String.format("%s::%s::Balance $%s",
 				getType(), holder, df.format(balance));
 		if(closed) acc += "::CLOSED";

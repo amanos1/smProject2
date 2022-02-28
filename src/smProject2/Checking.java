@@ -1,11 +1,18 @@
 package smProject2;
 
+/**
+ * Subclass of Account that contains information about a Checking account.
+ * @author Aaron Browne, Harshkumar Patel
+ */
 public class Checking extends Account
 {
-	private final double YEARLY_INTEREST = 0.001;
-	private final double FEE = 25;
-	private final int FEE_WAIVE = 1000;
+	private static final double YEARLY_INTEREST = 0.001;
+	private static final double FEE = 25;
+	private static final int FEE_WAIVE = 1000;
 
+	/**
+	 * This constructor with no arguments will never be run, but I need it to run the program without an error.
+	 */
 	public Checking() { }
 
 	/**
@@ -39,12 +46,12 @@ public class Checking extends Account
 	/**
 	 * Returns the monthly fee.
 	 * Returns 0 if the fee is waived.
-	 * @return the monthly fee.
+	 * @return The monthly fee.
 	 */
 	public double fee()
 	{
 		if(balance >= FEE_WAIVE) return 0;
-		return FEE; //return the monthly fee
+		return FEE;
 	}
 
 	/**

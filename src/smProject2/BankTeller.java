@@ -46,8 +46,7 @@ public class BankTeller
 	    scn.close();
 	    System.out.println("Bank Teller is terminated.");	    
 	}
-	
-	
+
 	/**
 	 * Creates a Profile object with the information provided.
 	 * @param input The input string containing information about the Profile.
@@ -164,7 +163,6 @@ public class BankTeller
 	    return a;
 	}
 
-	//GOTTA FIX A STRINGTOKENIZER ISSUE, IT INCLUDES TABS IN THE TOKENS 4 SOME REASON
 	/**
 	 * Opens a new account with the information in the given string.
 	 * Prints error message if the command is invalid or the account conflicts with another one.
@@ -277,7 +275,7 @@ public class BankTeller
 	 * @param holder The holder of the account as a Profile class.
 	 * @param type The type of account as a String.
 	 * @param deposit true if transaction is a deposit and false if it is a withdrawal.
-	 * @return
+	 * @return true if the deposit/withdrawal was successful, false if not.
 	 */
 	private boolean processTransaction(double amount, Profile holder,
 			String type, boolean deposit)
