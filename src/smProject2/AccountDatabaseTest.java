@@ -2,13 +2,17 @@ package smProject2;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Test;
-
-class AccountDatabaseTest {
-
-	@Test
-	void test() {
-		fail("Not yet implemented");
+class AccountDatabaseTest
+{
+	@org.junit.Test
+	public void testOpen()
+	{
+		assertTrue(false);
 	}
 
+	@org.junit.Test
+	public void testClose()
+	{
+		fail("Not yet implemented");
+	}
 }
