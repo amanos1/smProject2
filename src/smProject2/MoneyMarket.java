@@ -8,6 +8,7 @@ package smProject2;
 public class MoneyMarket extends Savings
 {
 	private int withdrawls;
+	public boolean loyal;
 
 	private static final double YEARLY_INTEREST = 0.008;
 	private static final double LOYAL_INTEREST = 0.0095;
