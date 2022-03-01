@@ -1,5 +1,5 @@
 package smProject2;
-
+import java.text.DecimalFormat;
 /**
  * Subclass of Account that contains information about a Savings account.
  * Additionally keeps track of whether the account is loyal or not.
@@ -13,6 +13,8 @@ public class Savings extends Account
 	private static final double LOYAL_INTEREST = 0.0045;
 	private static final double FEE = 6;
 	private static final int FEE_WAIVE = 300;
+
+	private static final DecimalFormat df = new DecimalFormat("0.00");
 
 	/**
 	 * This constructor with no arguments will never be run, but I need it to run the program without an error.
