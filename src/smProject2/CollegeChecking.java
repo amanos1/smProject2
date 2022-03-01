@@ -45,7 +45,8 @@ public class CollegeChecking extends Checking
 	@Override
 	public double monthlyInterest()
 	{
-		return balance * (YEARLY_INTEREST / Month.TOTAL_MONTHS);
+		double ml = this.balance * (YEARLY_INTEREST / Month.TOTAL_MONTHS);
+		return Double.parseDouble(df.format(ml));
 	}
 
 	/**
