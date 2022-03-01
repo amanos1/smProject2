@@ -63,6 +63,17 @@ public class Savings extends Account
 		super.close();
 		loyal = false;
 	}
+	
+	/**
+	 * Reopens an account and initializes it with the information in the given Account.
+	 * @param acc The account to copy information from.
+	 */
+	public void unclose(Account acc) 
+	{
+		this.holder = acc.holder;
+		this.balance = acc.balance;
+		this.closed = false;
+	}
 
 	/**
 	 * Returns a string containing the type of account.
