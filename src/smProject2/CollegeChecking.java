@@ -1,5 +1,5 @@
 package smProject2;
-
+import java.text.DecimalFormat;
 /**
  * Subclass of Checking that contains information about
  * a College Checking account.
@@ -14,6 +14,9 @@ public class CollegeChecking extends Checking
 	private static final int NEWARK = 1;
 	private static final int CAMDEN = 2;
 	private static final double YEARLY_INTEREST = 0.0025;
+	
+	private static final DecimalFormat df = new DecimalFormat("0.00");
+
 
 	/**
 	 * Creates an instance of the CollegeChecking class.
