@@ -37,9 +37,8 @@ public class Savings extends Account
 	 */
 	public double monthlyInterest()
 	{
-		if(loyal) 
-			return balance * (LOYAL_INTEREST / Month.TOTAL_MONTHS);
-		return     balance * (INTEREST / Month.TOTAL_MONTHS);
+		if(loyal) return Double.parseDouble(df.format(this.balance * (LOYAL_INTEREST / Month.TOTAL_MONTHS)));
+		return  Double.parseDouble(df.format(this.balance * (INTEREST / Month.TOTAL_MONTHS)));alance * (INTEREST / Month.TOTAL_MONTHS);
 	}
 
 	/**
