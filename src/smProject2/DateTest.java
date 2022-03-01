@@ -1,7 +1,12 @@
 package smProject2;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * This is a test class that checks the isValid() method of the Data class
+ * using assert statements.
+ * @author Harshkumar Patel, Aaron Browne
+ *
+ */
 class DateTest {
 
 	@org.junit.Test
