@@ -1,5 +1,5 @@
 package smProject2;
-
+import java.text.DecimalFormat;
 /**
  * Subclass of Account that contains information about a Checking account.
  * @author Aaron Browne, Harshkumar Patel
@@ -9,6 +9,8 @@ public class Checking extends Account
 	private static final double YEARLY_INTEREST = 0.001;
 	private static final double FEE = 25;
 	private static final int FEE_WAIVE = 1000;
+	
+	private static final DecimalFormat df = new DecimalFormat("0.00");
 
 	/**
 	 * This constructor with no arguments will never be run, but I need it to run the program without an error.
@@ -54,6 +56,15 @@ public class Checking extends Account
 		if(balance >= FEE_WAIVE) return 0;
 		return FEE;
 	}
+	
+	/**
+	 * Deducts the account fee from the accounts balance.
+	 */
+	public void deductFees() 
+	{
+		this.balance -= FEE;
+	}
+
 
 	/**
 	 * Returns a string containing the type of account.
