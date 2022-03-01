@@ -1,4 +1,5 @@
 package smProject2;
+import java.text.DecimalFormat;
 
 /**
  * Subclass of Savings that contains information about a Money Market account.
@@ -15,6 +16,8 @@ public class MoneyMarket extends Savings
 	private static final double FEE = 10;
 	private static final int FEE_WAIVE = 2500;
 	private static final int TOTAL_ALLOWED_WITHDRAWALS = 3;
+
+	private static final DecimalFormat df = new DecimalFormat("0.00");
 
 	/**
 	 * Creates an instance of the MoneyMarket class when given the holder and initial deposit.
