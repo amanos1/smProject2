@@ -60,8 +60,10 @@ public class MoneyMarket extends Savings
 	@Override
 	public double monthlyInterest()
 	{
-		if(loyal) return balance * (LOYAL_INTEREST / Month.TOTAL_MONTHS);
-		return           balance * (YEARLY_INTEREST / Month.TOTAL_MONTHS);
+		double loyalCustomer = balance *(LOYAL_INTEREST / Month.TOTAL_MONTHS);
+		double notLoyalCustomer = balance * (YEARLY_INTEREST / Month.TOTAL_MONTHS);
+		if(loyal) return Double.parseDouble(df.format(loyalCustomer));
+		return  Double.parseDouble(df.format(notLoyalCustomer));
 	}
 
 	/**
