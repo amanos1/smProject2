@@ -1,7 +1,12 @@
 package smProject2;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * This is a test class that tests monthlyInterest() method of the 
+ * MoneyMarket class using assert statements.
+ * @author Harshkumar Patel, Aaron Browne
+ *
+ */
 public class MoneyMarketTest
 {
 	@org.junit.Test
